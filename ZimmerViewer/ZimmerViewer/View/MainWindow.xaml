@@ -1,0 +1,39 @@
+﻿<Window x:Class="ZimmerViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZimmerViewer"
+        xmlns:viewmodel="clr-namespace:ZimmerViewer.ViewModel"
+        mc:Ignorable="d"
+        Title="Viewer" Height="579.038" Width="930" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <viewmodel:PartsViewModel></viewmodel:PartsViewModel>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid Height="55" VerticalAlignment="Top">
+            <UniformGrid Columns="3">
+                <TextBlock Text=" Исходный код" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text=" Название запчасти" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text=" Связанные номера" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="{Binding PartCode, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding PartName, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding LinkPartCode, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
+            </UniformGrid>
+        </Grid>
+        <ListView Margin="0,55,0,0" ItemsSource="{Binding Model.PartsList}">
+            <ListView.View>
+                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                    <GridViewColumn DisplayMemberBinding="{Binding PartCodeAndBrand}"  Width="300"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding PartName}" Width="305"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding LinkPartCodeAndBrand}" Width="295"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
